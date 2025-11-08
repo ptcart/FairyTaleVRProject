@@ -2,13 +2,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// 🎮 VRUIButtonClicker
+/// - 컨트롤러로 UI 버튼을 가리키고 클릭 가능
+/// - NextButton: 새 게임 시작
+/// - ContinueButton: 저장된 씬으로 이어하기
+/// - BackButton: 이전 씬(메인 메뉴 등)으로 돌아가기
+/// </summary>
 public class VRUIButtonClicker : MonoBehaviour
 {
-    public OVRInput.Button selectButton = OVRInput.Button.One; // One 버튼
+    [Header("🎯 VR 입력 설정")]
+    public OVRInput.Button selectButton = OVRInput.Button.One; // 오른손 A 버튼
     public OVRInput.Controller controller = OVRInput.Controller.RTouch; // 오른손
-    public LayerMask buttonLayer; // "UIButton" 같은 레이어로 버튼만 감지하게
+    public LayerMask buttonLayer; // UI 버튼 전용 레이어
 
-    private GameObject currentHoverButton = null; // 현재 레이 맞은 버튼 저장
+    private GameObject currentHoverButton = null;
     private Color originalColor;
 
     void Update()
@@ -20,41 +28,84 @@ public class VRUIButtonClicker : MonoBehaviour
         {
             GameObject hitButton = hit.collider.gameObject;
 
+            // 🔸 Hover 색상 처리
             if (currentHoverButton != hitButton)
             {
-                ClearHover(); // 기존 Hover 초기화
-
-                // 새로 Hover 시작
+                ClearHover(); // 이전 버튼 복구
                 currentHoverButton = hitButton;
+
                 Image img = hitButton.GetComponent<Image>();
                 if (img != null)
                 {
                     originalColor = img.color;
-                    img.color = Color.yellow; // ⭐ Highlight 색으로 변경
+                    img.color = Color.yellow; // ⭐ Hover 시 색상 변경
                 }
             }
 
+            // 🔹 클릭 감지
             if (OVRInput.GetDown(selectButton, controller))
             {
-                Debug.Log("🟢 버튼 히트: " + hit.collider.gameObject.name);
-
-                if (hit.collider.CompareTag("NextButton")) // ← Tag로 구분
+                Button btn = hit.collider.GetComponent<Button>();
+                if (btn == null)
                 {
-                    Button btn = hit.collider.GetComponent<Button>();
-                    if (btn != null && !btn.interactable)
+                    Debug.LogWarning($"⚠️ 클릭된 오브젝트 {hit.collider.name}에 Button 컴포넌트가 없습니다.");
+                    return;
+                }
+
+                if (!btn.interactable)
+                {
+                    Debug.Log("🚫 버튼이 비활성화 상태입니다. 클릭 무시");
+                    return;
+                }
+
+                Debug.Log($"🟢 VR 버튼 클릭됨: {hit.collider.name} (Tag: {hit.collider.tag})");
+
+                // =====================================
+                // 1️⃣ NextButton → 새 게임 시작
+                // =====================================
+                if (hit.collider.CompareTag("NextButton"))
+                {
+                    GameDataManager.nextStoryIdToLoad = 0;
+                    Debug.Log("🧭 새 게임 시작 → StoryID 초기화 (0으로 설정)");
+                    GlobalScreenFader.Instance.FadeAndLoadScene("NPCInteraction 1");
+                }
+
+                // =====================================
+                // 2️⃣ ContinueButton → 이어하기
+                // =====================================
+                else if (hit.collider.CompareTag("ContinueButton"))
+                {
+                    if (!SaveManager.HasSaveData())
                     {
-                        Debug.Log("🚫 버튼이 비활성화 상태입니다. 클릭 무시");
+                        Debug.Log("⚫ 저장된 데이터가 없습니다 → 이어하기 불가");
                         return;
                     }
 
-                    Debug.Log("🚪 Intro 씬으로 이동 (페이드 아웃 시작)");
-                    GlobalScreenFader.Instance.FadeAndLoadScene("NPCInteraction 1");
+                    string savedScene = SaveManager.LoadSavedScene();
+                    if (!string.IsNullOrEmpty(savedScene))
+                    {
+                        Debug.Log($"🔄 이어하기 → '{savedScene}' 씬 로드 중...");
+                        GlobalScreenFader.Instance.FadeAndLoadScene(savedScene);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("⚠️ 저장된 씬 정보를 불러올 수 없습니다.");
+                    }
+                }
+
+                // =====================================
+                // 3️⃣ BackButton → 이전 씬으로 돌아가기
+                // =====================================
+                else if (hit.collider.CompareTag("BackButton"))
+                {
+                    string previousScene = "MainVRScene"; // 🧭 기본적으로 메인 메뉴 씬 이름
+                    Debug.Log($"↩️ [VRUIButtonClicker] 뒤로가기 → '{previousScene}' 로 전환");
+                    GlobalScreenFader.Instance.FadeAndLoadScene(previousScene);
                 }
             }
         }
         else
         {
-            // Ray가 아무것도 안 맞으면 Hover 해제
             ClearHover();
         }
     }
@@ -65,9 +116,8 @@ public class VRUIButtonClicker : MonoBehaviour
         {
             Image img = currentHoverButton.GetComponent<Image>();
             if (img != null)
-            {
-                img.color = originalColor; // 원래 색 복구
-            }
+                img.color = originalColor;
+
             currentHoverButton = null;
         }
     }

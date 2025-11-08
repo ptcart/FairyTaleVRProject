@@ -92,8 +92,18 @@ public class SoundSettings : MonoBehaviour
         masterMixer.SetFloat("NarrationVolume", isNarrationMuted ? -80f : 0f);
 
         // ✅ 슬라이더 기본값
-        bgmSlider.value = 1f;
-        sfxSlider.value = 1f;
+        // bgmSlider.value = 1f;
+        // sfxSlider.value = 1f;
+        // ✅ 슬라이더 값을 PlayerPrefs에서 불러온 볼륨으로 반영 (dB → 0~1)
+        float bgmValueNormalized = Mathf.Pow(10, savedBgm / 20);
+        float sfxValueNormalized = Mathf.Pow(10, savedSfx / 20);
+        bgmSlider.SetValueWithoutNotify(bgmValueNormalized);
+        sfxSlider.SetValueWithoutNotify(sfxValueNormalized);
+
+        // ✅ 슬라이더 잠금 상태 유지 (음소거된 경우)
+        bgmSlider.interactable = !isBgmMuted;
+        sfxSlider.interactable = !isSfxMuted;
+
 
         // ✅ 토글 UI 상태 (이벤트 없이 반영)
         bgmMuteToggle.SetIsOnWithoutNotify(isBgmMuted);
@@ -218,6 +228,20 @@ public class SoundSettings : MonoBehaviour
             Debug.Log("🔊 BGM 음소거 해제됨");
         }
         bgmSlider.interactable = !isMuted;
+
+// 🔹 시각적으로 슬라이더 손잡이(동그라미) 위치도 그대로 유지
+        bgmSlider.SetValueWithoutNotify(bgmSlider.value);
+
+// 🔹 음소거 시 슬라이더를 아예 비활성화, 해제 시 다시 활성화
+        if (isMuted)
+        {
+            bgmSlider.interactable = false;
+        }
+        else
+        {
+            bgmSlider.interactable = true;
+        }
+
     }
 
     // ===============================================================
@@ -248,6 +272,18 @@ public class SoundSettings : MonoBehaviour
             Debug.Log("🔊 SFX 음소거 해제됨");
         }
         sfxSlider.interactable = !isMuted;
+        sfxSlider.SetValueWithoutNotify(sfxSlider.value);
+
+// 🔹 음소거 시 비활성화 / 해제 시 활성화
+        if (isMuted)
+        {
+            sfxSlider.interactable = false;
+        }
+        else
+        {
+            sfxSlider.interactable = true;
+        }
+
         PlayClickSound();
     }
 
@@ -342,17 +378,21 @@ public class SoundSettings : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("SoundInitialized"))
         {
+            // 🎵 첫 실행 시 기본 볼륨 = 0dB (즉, 100%)
             PlayerPrefs.SetFloat("BGMVolume", 0f);
             PlayerPrefs.SetFloat("SFXVolume", 0f);
 
-            // 🔹 원하는 기본값
-            PlayerPrefs.SetInt("BgmMuted", 1);        // 배경음 꺼짐
-            PlayerPrefs.SetInt("SfxMuted", 1);        // 효과음 꺼짐
-            PlayerPrefs.SetInt("NpcMuted", 0);        // NPC 켜짐
-            PlayerPrefs.SetInt("NarrationMuted", 0);  // 나레이션 켜짐
+            // 🔹 기본 토글 상태
+            PlayerPrefs.SetInt("BgmMuted", 0);        // 배경음 켜짐 ✅
+            PlayerPrefs.SetInt("SfxMuted", 0);        // 효과음 켜짐 ✅
+            PlayerPrefs.SetInt("NpcMuted", 0);        // NPC 켜짐 ✅
+            PlayerPrefs.SetInt("NarrationMuted", 0);  // 나레이션 켜짐 ✅
 
             PlayerPrefs.SetInt("SoundInitialized", 1);
             PlayerPrefs.Save();
+
+            Debug.Log("🟣 [SoundSettings] 첫 실행 - 기본 오디오 설정 저장 완료");
+
 
             Debug.Log("🟣 [SoundSettings] 첫 실행 - 기본 오디오 설정 저장 완료");
         }
@@ -365,12 +405,12 @@ public class SoundSettings : MonoBehaviour
     // ===============================================================
 // 🧹 실행 종료 시 모든 PlayerPrefs 초기화
 // ===============================================================
-    private void OnApplicationQuit()
-    {
-        PlayerPrefs.DeleteAll(); // ✅ 모든 저장값 삭제
-        PlayerPrefs.Save();
-        Debug.Log("🧹 [SoundSettings] 실행 종료 - PlayerPrefs 전부 초기화됨");
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     PlayerPrefs.DeleteAll(); // ✅ 모든 저장값 삭제
+    //     PlayerPrefs.Save();
+    //     Debug.Log("🧹 [SoundSettings] 실행 종료 - PlayerPrefs 전부 초기화됨");
+    // }
 
 
     

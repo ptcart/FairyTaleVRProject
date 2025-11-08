@@ -19,7 +19,8 @@ public class FairyTaleUIManager : MonoBehaviour
         
     }
 
-    public Button nextButton; // 👈 인스펙터에서 연결
+    public Button nextButton; 
+    public Button continueButton;// 👈 인스펙터에서 연결
     public Transform contentParent; // ScrollView → Content
     public GameObject cardPrefab;   // 새로 만든 카드 프리팹
     public TextMeshProUGUI titleText;
@@ -34,11 +35,16 @@ public class FairyTaleUIManager : MonoBehaviour
 
     void Start()
     {
+        SaveManager.ValidateSaveAtStartup();
         StartCoroutine(LoadFairyTales());
+
+        // 🎯 처음엔 모든 버튼 숨김
         if (nextButton != null)
-            nextButton.interactable = false; // 또는 nextButton.gameObject.SetActive(false);
-        
-        // ⭐ 처음에 DetailPanel 안 모든 오브젝트 꺼주기
+            nextButton.gameObject.SetActive(false);
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(false);
+
+        // ⭐ DetailPanel 초기화
         if (detailPanelObjects != null)
         {
             foreach (var obj in detailPanelObjects)
@@ -47,7 +53,49 @@ public class FairyTaleUIManager : MonoBehaviour
                     obj.SetActive(false);
             }
         }
+
+        // // ✅ 저장된 데이터가 있는 경우에만 ‘계속하기’ 버튼 표시
+        // if (continueButton != null)
+        // {
+        //     bool showContinue = false;
+        //     string savedScene = SaveManager.LoadSavedScene();
+        //
+        //     if (!string.IsNullOrEmpty(savedScene))
+        //     {
+        //         // 🚫 저장된 씬이 저장 제외 목록에 속하는 경우 표시하지 않음
+        //         bool isNonSavable = false;
+        //         foreach (var scene in typeof(SaveManager)
+        //                      .GetField("nonSavableScenes", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+        //                      .GetValue(null) as string[])
+        //         {
+        //             if (savedScene == scene)
+        //             {
+        //                 isNonSavable = true;
+        //                 break;
+        //             }
+        //         }
+        //
+        //         if (!isNonSavable)
+        //         {
+        //             showContinue = true;
+        //             Debug.Log($"💾 유효한 저장 씬 발견 → '{savedScene}' 계속하기 버튼 표시");
+        //         }
+        //         else
+        //         {
+        //             Debug.Log($"⚠️ 저장된 씬({savedScene})은 저장 제외 목록 → 계속하기 버튼 숨김");
+        //         }
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("📄 저장 데이터 없음 또는 비정상 파일 → ‘계속하기’ 버튼 숨김");
+        //     }
+        //
+        //     continueButton.gameObject.SetActive(showContinue);
+        // }
+
     }
+
+
 
     IEnumerator LoadFairyTales()
     {
@@ -197,31 +245,71 @@ public class FairyTaleUIManager : MonoBehaviour
         // 새로 선택
         selectedCard = cardUI;
         selectedCard.SetSelected(true);
-        
-        if (nextButton != null)
-            nextButton.interactable = true; // 또는 nextButton.gameObject.SetActive(true);
-        
-        // ⭐ 카드 클릭 시 DetailPanel 오브젝트 켜주기
+
+        // ⭐ 상세 패널 활성화
         if (detailPanelObjects != null)
         {
             foreach (var obj in detailPanelObjects)
-            {
-                if (obj != null)
-                    obj.SetActive(true);
-            }
+                if (obj != null) obj.SetActive(true);
         }
-        
-        // ✅ 썸네일 이미지 복사 추가
+
+        // ✅ 썸네일 복사
         if (previewImage != null && cardUI.thumbnailImage != null)
-        {
             previewImage.sprite = cardUI.thumbnailImage.sprite;
+
+        // 🎯 처음엔 전부 숨김
+        if (nextButton != null) nextButton.gameObject.SetActive(false);
+        if (continueButton != null) continueButton.gameObject.SetActive(false);
+
+        // ✅ 저장 여부 확인 후 표시
+        if (SaveManager.HasSaveData())
+        {
+            // 저장 기록 있음 → 입장 + 계속하기
+            if (nextButton != null)
+            {
+                nextButton.gameObject.SetActive(true);
+                nextButton.interactable = true; // 🔥 흐려짐 방지
+            }
+            if (continueButton != null)
+                continueButton.gameObject.SetActive(true);
+
+            Debug.Log("💾 저장 기록 있음 → ‘입장’ + ‘계속하기’ 표시");
+        }
+        else
+        {
+            // 저장 기록 없음 → 입장만
+            if (nextButton != null)
+            {
+                nextButton.gameObject.SetActive(true);
+                nextButton.interactable = true; // 🔥 클릭 가능하도록
+            }
+            if (continueButton != null)
+                continueButton.gameObject.SetActive(false);
+
+            Debug.Log("📄 저장 기록 없음 → ‘입장’만 표시");
         }
 
-        // ✅ 로그 출력
-        Debug.Log("✅ 카드 선택됨: " + cardUI.fairyTaleData.title);
 
+        Debug.Log("✅ 카드 선택됨: " + cardUI.fairyTaleData.title);
         ShowDetails(cardUI.fairyTaleData);
     }
+
+    public void ContinueGame()
+    {
+        string savedScene = SaveManager.LoadSavedScene();
+
+        if (!string.IsNullOrEmpty(savedScene))
+        {
+            Debug.Log($"▶ 저장된 씬으로 이동: {savedScene}");
+            SceneManager.LoadScene(savedScene);
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ 저장된 씬이 없습니다. 새 게임을 시작해야 합니다.");
+        }
+    }
+
+
     
     public void GoToNextScene()
     {

@@ -8,6 +8,9 @@ TagManager:
   - Obstacle
   - UIButton
   - Wolf
+  - Wall
+  - NextButton
+  - ContinueButton
   layers:
   - Default
   - TransparentFX
