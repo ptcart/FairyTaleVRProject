@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class CollectableStoryItem : MonoBehaviour
 {
     [Header("아이템 설정")]
-    public string itemName;         
+    public string itemName;      
+    public string itemKey;   // 시스템용 (Bucket, Butter, Pepper)
     public float holdDuration = 2f;  // 버튼 누르고 있어야 하는 시간
 
     [Header("UI")]
@@ -13,12 +14,19 @@ public class CollectableStoryItem : MonoBehaviour
     private bool collected = false;
     private float holdStartTime = -1f; 
     private bool isTargeted = false;    
+    
+    private QuickOutline outline; // 아이템 테두리용
 
     void Start()
     {
         // 시작할 땐 게이지 꺼두기
         if (progressBar != null)
             progressBar.gameObject.SetActive(false);
+        
+        // 🔹 테두리 초기화
+        outline = GetComponent<QuickOutline>();
+        if (outline != null)
+            outline.SetOutline(false); // 시작 시 비활성화
     }
 
     void Update()
@@ -27,7 +35,14 @@ public class CollectableStoryItem : MonoBehaviour
 
         // ✅ 현재 스토리ID 가져오기
         // ✅ 현재 NPC의 스토리 ID 확인
-
+        // 🔹 스토리 301일 때만 테두리 표시
+        if (outline != null)
+        {
+            if (currentStory == 301 && !collected)
+                outline.SetOutline(true);
+            else
+                outline.SetOutline(false);
+        }
         Debug.Log("지금 스토리 어디인가용? : " + currentStory);
 
         if (isTargeted && currentStory == 301) // 🔑 301일 때만 게이지 표시
@@ -99,7 +114,7 @@ public class CollectableStoryItem : MonoBehaviour
         StoryItemManager.Instance?.CollectItem(itemName);
 
         Debug.Log($"✅ {itemName} 최종 수집 완료!");
-        DialogueUI.Instance?.ShowTemporaryMessage($"{itemName} 획득!", 1.5f);
+        DialogueUI.Instance?.ShowTemporaryMessage($"{itemKey} 획득!", 1.5f);
 
         if (progressBar != null) 
             progressBar.fillAmount = 0f;
@@ -111,7 +126,7 @@ public class CollectableStoryItem : MonoBehaviour
         if (StoryItemManager.Instance.AllItemsCollected())
         {
             Debug.Log("모든 재료를 모았습니다! 이제 NPC와 대화할 수 있습니다.");
-            DialogueUI.Instance?.ShowTemporaryMessage("모든 재료를 모았습니다!", 2f);
+            DialogueUI.Instance?.ShowTemporaryMessage("할머니에게 가자", 2f);
             StoryItemManager.Instance.questCompleted = true;
         }
         else

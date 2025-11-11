@@ -3350,7 +3350,6 @@ GameObject:
   - component: {fileID: 1322988589}
   - component: {fileID: 1322988588}
   - component: {fileID: 1322988587}
-  - component: {fileID: 1322988594}
   - component: {fileID: 1322988593}
   m_Layer: 5
   m_Name: StartButton
@@ -3529,23 +3528,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1322988585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bda20394d001c74eaa431a79706e670, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: ObstacleMain
---- !u!114 &1322988594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322988585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db563c64acb4b4a8ff77e3e46287b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
+  volume: 1
 --- !u!1 &1331673859
 GameObject:
   m_ObjectHideFlags: 0
@@ -4899,7 +4888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 2033409319}
   blurBackground: {fileID: 1867016781}
-  pauseButton: 2
+  pauseButton: 8
   centerEyeAnchor: {fileID: 2041914663}
   menuDistance: 1
   heightOffset: -0.06
@@ -6051,7 +6040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
-  clickButton: 2097152
+  clickButton: 1
 --- !u!1 &2063952016
 GameObject:
   m_ObjectHideFlags: 0

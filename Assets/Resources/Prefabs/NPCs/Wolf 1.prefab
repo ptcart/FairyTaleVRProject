@@ -67,15 +67,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB291\uB300"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9704de40f9dab4a4f8802c39c8778308, type: 2}
-  m_sharedMaterial: {fileID: -4221379685524100544, guid: 9704de40f9dab4a4f8802c39c8778308, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 719a8f475a94c19439231cd5f923221b, type: 2}
+  m_sharedMaterial: {fileID: 4583561781223494979, guid: 719a8f475a94c19439231cd5f923221b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

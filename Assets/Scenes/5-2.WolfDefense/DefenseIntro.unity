@@ -271,8 +271,7 @@ GameObject:
   - component: {fileID: 15920252}
   - component: {fileID: 15920251}
   - component: {fileID: 15920253}
-  - component: {fileID: 15920256}
-  - component: {fileID: 15920255}
+  - component: {fileID: 15920254}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: UIButton
@@ -344,7 +343,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 15920255}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIButtonClickSound, Assembly-CSharp
         m_MethodName: PlayClickSound
         m_Mode: 1
@@ -441,7 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 21300000, guid: 205d7e4f03b5cda48817e9df4057cfcf, type: 3}
   highlightSprite: {fileID: 21300000, guid: 89ab20275c2e9864e8e673936c9c4021, type: 3}
---- !u!114 &15920255
+--- !u!114 &15920254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -450,22 +449,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 15920246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db563c64acb4b4a8ff77e3e46287b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneToLoad: DefenseMain
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
---- !u!114 &15920256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15920246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46ba8ca1ef8254bbdb3cbf746a019d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  volume: 1
 --- !u!1 &43319134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,7 +1422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 586507885}
   blurBackground: {fileID: 1205268880}
-  pauseButton: 2
+  pauseButton: 8
   centerEyeAnchor: {fileID: 2041914663}
   menuDistance: 1
   heightOffset: -0.06
@@ -2515,9 +2505,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e579248a13d9e9e498f150ab754f8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenesToStopBGM:
-  - DefenseMain
-  - NPCInteraction 8
+  bgmName: "MP_\uC120\uACFC \uC545"
+  scenesToKeepBGM:
+  - DefenseRule
 --- !u!82 &1256143186
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2527,9 +2517,9 @@ AudioSource:
   m_GameObject: {fileID: 1256143184}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5335566363546800906, guid: 6707bcfd407393548b740db49e76de8d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 00819c490ba1cc144b344deb8e595ca6, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -2644,8 +2634,7 @@ GameObject:
   - component: {fileID: 1331673864}
   - component: {fileID: 1331673863}
   - component: {fileID: 1331673862}
-  - component: {fileID: 1331673870}
-  - component: {fileID: 1331673869}
+  - component: {fileID: 1331673868}
   m_Layer: 5
   m_Name: RulesButton
   m_TagString: UIButton
@@ -2764,7 +2753,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1331673869}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIButtonClickSound, Assembly-CSharp
         m_MethodName: PlayClickSound
         m_Mode: 1
@@ -2814,7 +2803,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331673859}
   m_CullTransparentMesh: 1
---- !u!114 &1331673869
+--- !u!114 &1331673868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2823,23 +2812,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1331673859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db563c64acb4b4a8ff77e3e46287b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
---- !u!114 &1331673870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331673859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97a8ca93244c33c4a81c898fafb9c733, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0.3
+  sceneToLoad: DefenseRule
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
   volume: 1
 --- !u!1 &1508754250
@@ -3699,7 +3676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
-  clickButton: 2097152
+  clickButton: 1
 --- !u!1 &2073662335
 GameObject:
   m_ObjectHideFlags: 0

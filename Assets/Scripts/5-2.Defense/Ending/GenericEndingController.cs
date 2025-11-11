@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 /// 🎬 모든 엔딩씬에서 공용으로 사용하는 엔딩 연출 컨트롤러
 /// - Inspector에서 엔딩 스크립트(대사) 설정 가능
 /// - 자동 페이드 인/아웃 및 버튼 표시 지원
-/// - Flask 서버로 엔딩 클리어 상태(is_cleared) 자동 업데이트
+/// - Flask 서버로 엔딩 클리어 상태(is_cleared) 자동 업데이트 
 /// </summary>
 public class GenericEndingController : MonoBehaviour
 {

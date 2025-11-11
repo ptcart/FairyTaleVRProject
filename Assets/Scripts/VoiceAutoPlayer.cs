@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class VoiceAutoPlayer : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class VoiceAutoPlayer : MonoBehaviour
     public TMP_Text dialogueText;         // 대사 TMP (자동 탐색)
     public TMP_Text npcNameText;          // NPC 이름 TMP (자동 탐색)
 
-    private string lastStoryText = "";
-    private string lastDialogueText = "";
+    public string lastStoryText = "";
+    public string lastDialogueText = "";
 
     private static string currentStoryAudioPath = "";
     private static string currentDialogueAudioPath = "";
@@ -36,11 +37,34 @@ public class VoiceAutoPlayer : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+        
+        if (SceneManager.GetActiveScene().name == "NPCInteraction 1")
+        {
+            currentStoryId = 0;
+            Debug.Log("🧹 NPCInteraction 1 씬 → CurrentStoryId 초기화 완료");
+        }
     }
 
     void Start()
     {
         TryFindDialogueText();
+        // 🎯 자동으로 나레이션 Text 찾아 연결
+        if (storyNarrationText == null)
+        {
+            var narrationCanvas = GameObject.Find("Canvas_StoryNarration");
+            if (narrationCanvas != null)
+            {
+                storyNarrationText = narrationCanvas.GetComponentInChildren<TMP_Text>(true);
+                if (storyNarrationText != null)
+                    Debug.Log($"🟢 자동 연결 성공: {storyNarrationText.name}");
+                else
+                    Debug.LogWarning("⚠️ Canvas_StoryNarration 안에서 TMP_Text를 찾지 못함");
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ Canvas_StoryNarration 오브젝트 자체를 찾을 수 없음");
+            }
+        }
     }
 
     void Update()
@@ -60,6 +84,36 @@ public class VoiceAutoPlayer : MonoBehaviour
         // 🔹 자동 TMP 탐색
         if (dialogueText == null)
             TryFindDialogueText();
+        
+        // 🔹 나레이션 감지
+        if (storyNarrationText != null && storyNarrationText.text != lastStoryText)
+        {
+            if (!string.IsNullOrEmpty(storyNarrationText.text))
+            {
+                if (narrationCoroutine != null)
+                    StopCoroutine(narrationCoroutine);
+                narrationCoroutine = StartCoroutine(OnNarrationChanged());
+            }
+            lastStoryText = storyNarrationText.text;
+        }
+
+        // 🔹 자동 TMP 탐색
+        if (dialogueText == null)
+            TryFindDialogueText();
+
+        // 🧩 나중에 스폰된 Canvas_StoryNarration을 위한 지연 탐색
+        if (storyNarrationText == null)
+        {
+            var narrationCanvas = GameObject.Find("Canvas_StoryNarration");
+            if (narrationCanvas != null)
+            {
+                storyNarrationText = narrationCanvas.GetComponentInChildren<TMPro.TMP_Text>(true);
+                if (storyNarrationText != null)
+                {
+                    Debug.Log($"🟢 [VoiceAutoPlayer] 나중에 생성된 나레이션 TMP 자동 연결됨: {storyNarrationText.name}");
+                }
+            }
+        }
     }
 
     // =======================================================
@@ -230,5 +284,20 @@ public class VoiceAutoPlayer : MonoBehaviour
         string[] parts = path.Split('_');
         if (parts.Length >= 4 && int.TryParse(parts[3], out int id)) return id;
         return -1;
+    }
+    
+    public void ForcePlayNarration()
+    {
+        if (string.IsNullOrEmpty(currentStoryAudioPath))
+        {
+            Debug.LogWarning("⚠️ [VoiceAutoPlayer] 나레이션 경로가 비어 있음 — 재생 불가");
+            return;
+        }
+
+        if (narrationCoroutine != null)
+            StopCoroutine(narrationCoroutine);
+
+        Debug.Log($"🎬 [VoiceAutoPlayer] 강제 나레이션 재생 시작: {currentStoryAudioPath}");
+        narrationCoroutine = StartCoroutine(OnNarrationChanged());
     }
 }

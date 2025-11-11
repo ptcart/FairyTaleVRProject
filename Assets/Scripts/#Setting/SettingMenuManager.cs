@@ -57,8 +57,8 @@ public class SettingMenuManager : MonoBehaviour
         SettingInfo[] settingData =
         {
             new SettingInfo("기본 설정", basicIcon, "basic"),
-            new SettingInfo("사운드 설정", soundIcon, "sound"),
-            new SettingInfo("UI 설정", uiIcon, "ui")
+            //new SettingInfo("사운드 설정", soundIcon, "sound"),
+            //new SettingInfo("UI 설정", uiIcon, "ui")
         };
 
         foreach (var data in settingData)

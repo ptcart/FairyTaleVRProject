@@ -16483,7 +16483,7 @@ AudioSource:
   m_GameObject: {fileID: 576360710}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5335566363546800906, guid: 6707bcfd407393548b740db49e76de8d, type: 2}
   m_audioClip: {fileID: 8300000, guid: efbab8b58a71f5e41a55074b3bf847bd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.487
@@ -35427,7 +35427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 535027770}
   blurBackground: {fileID: 1221957058}
-  pauseButton: 2
+  pauseButton: 8
   centerEyeAnchor: {fileID: 1476179520}
   menuDistance: 1
   heightOffset: -0.06
@@ -52490,7 +52490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
-  clickButton: 2097152
+  clickButton: 1
 --- !u!114 &2057957733
 MonoBehaviour:
   m_ObjectHideFlags: 0

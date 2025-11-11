@@ -50,6 +50,7 @@ public class NPCInteraction : MonoBehaviour
     private int currentActiveStoryId = -1;
     
     private bool hasHandledStoryFlow = false; // ✅ 같은 storyId 중복 방지용    
+    public UnityEngine.UI.Image narrationImage; // 🎨 인스펙터에서 직접 연결
 
     void Start()
     {
@@ -69,6 +70,11 @@ public class NPCInteraction : MonoBehaviour
         isTalking = false;
         isNarrationMode = false;
 
+        if (narrationImage != null)
+        {
+            narrationImage.enabled = false; // ✅ 처음에는 숨김
+        }
+        
         if (dialogueUI != null)
             dialogueUI.SetActive(false);
     }
@@ -125,6 +131,12 @@ public class NPCInteraction : MonoBehaviour
                         return;
                     hasHandledStoryFlow = true;
                     
+                    if (narrationImage != null)
+                    {
+                        narrationImage.enabled = false; // ✅ 나레이션 시작 시 이미지 표시
+                    }
+
+                    
                     // 일반적인 나레이션 진행
                     storyNarrationText.text = "";
                     isNarrationMode = false;
@@ -133,30 +145,6 @@ public class NPCInteraction : MonoBehaviour
                     HandleNextStoryFlow();  // ✅ 이제 이 호출은 일반 스토리(대사 있는 경우)에만 실행됨
                 }
                 
-                // if (isNarrationMode)
-                // {
-                //     Debug.Log($"🟨 [isNarrationMode] storyId={storyId}, fromChoice={fromChoice}, hasStartedStory={hasStartedStory}, CurrentStoryId={CurrentStoryId}, currentChoiceMode={currentChoiceMode}");
-                //
-                //     // ✅ 선택지에서 막 넘어온 상태라면 1프레임 무시
-                //     if (fromChoice)
-                //     {
-                //         fromChoice = false;
-                //         return;
-                //     }
-                //     
-                //     // ✅ 이미 HandleNextStoryFlow가 한 번 실행됐다면 중복 방지
-                //     if (hasHandledStoryFlow)
-                //         return;
-                //     hasHandledStoryFlow = true;
-                //     
-                //     // 일반적인 나레이션 진행
-                //     storyNarrationText.text = "";
-                //     isNarrationMode = false;
-                //     isReadyForSceneChange = true;
-                //
-                //     HandleNextStoryFlow();  // ✅ 이제 이 호출은 일반 스토리(대사 있는 경우)에만 실행됨
-                // }
-
                 else if (isTalking && canAdvanceDialogue && !waitingForDialogueInput)
                 {
                     NextDialogue();
@@ -173,7 +161,7 @@ public class NPCInteraction : MonoBehaviour
                             if (dialogueUI != null && dialogueText != null)
                             {
                                 dialogueUI.SetActive(true);
-                                dialogueText.text = "재료를 찾아오자! (버터, 후추, 양동이)";
+                                dialogueText.text = "양동이, 버터, 후추를 찾아오자!(A버튼으로 수집가능)";
                                 StartCoroutine(HideDialogueAfterDelay(2f));
                             }
 
@@ -207,6 +195,41 @@ public class NPCInteraction : MonoBehaviour
             if (exclamationMark != null)
                 exclamationMark.SetActive(false);
         }
+        
+        // ✅ [여기 아래에 이 줄 추가]
+        // 🎯 빨간모자 전용 Ray 감지 코드 시작
+        if (CompareTag("RedHood"))
+        {
+            Transform rayOrigin = Camera.main.transform;
+            Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 5f))
+            {
+                // Ray가 자기 자신(빨간모자 Collider)에 닿은 경우만
+                if (hit.collider != null && hit.collider.gameObject == gameObject)
+                {
+                    if (OVRInput.GetDown(OVRInput.Button.One))
+                    {
+                        Debug.Log($"🧒 [RedHood 감지] Ray Hit + One 버튼 → 나레이션 시작");
+
+                        if (isTalking || isNarrationMode || hasStartedStory)
+                            return;
+
+                        hasStartedStory = true;
+                        isAnyDialogueActive = true;
+                        currentActiveNPC = this;
+                        isexclamationMark = false;
+
+                        if (exclamationMark != null)
+                            exclamationMark.SetActive(false);
+
+                        StartCoroutine(LoadStoryNarrationAndDecide(storyId));
+                    }
+                }
+            }
+        }
+        // 🎯 빨간모자 전용 Ray 감지 코드 끝
     }
 
     private IEnumerator HideDialogueAfterDelay(float delay)
@@ -220,6 +243,8 @@ public class NPCInteraction : MonoBehaviour
 
     IEnumerator LoadStoryNarrationAndDecide(int storyId)
     {
+        
+        
         Debug.Log($"🟢 [LoadStoryNarrationAndDecide 시작] storyId={storyId}, fromChoice={fromChoice}");
 
         
@@ -292,6 +317,12 @@ public class NPCInteraction : MonoBehaviour
                 if (storyNarrationText != null)
                     storyNarrationText.text = data.content;
                 
+                if (narrationImage != null)
+                {
+                    narrationImage.enabled = true; // ✅ 나레이션 시작 시 이미지 표시
+                }
+
+                
                 // ✅ 선택지 직후에는 자동으로 다음 입력 받을 준비
                 if (fromChoice)
                 {
@@ -312,6 +343,17 @@ public class NPCInteraction : MonoBehaviour
                 }
                 HandleNextStoryFlow();
             }
+            
+            // 🧩 [추가] VoiceAutoPlayer에 나레이션 강제 재생 트리거
+            if (!string.IsNullOrEmpty(data.audio_path))
+            {
+                VoiceAutoPlayer.RegisterStoryData(data.audio_path);
+                if (VoiceAutoPlayer.Instance != null)
+                {
+                    VoiceAutoPlayer.Instance.ForcePlayNarration(); // 👈 강제 재생 메서드 호출
+                }
+            }
+
     
             if (data.should_change_scene)
             {
@@ -322,6 +364,8 @@ public class NPCInteraction : MonoBehaviour
             }
         }
     }
+    
+
 
     // ✅ 모든 NPC를 일시적으로 비활성화
     public static void DisableAllNPCInteractions()
@@ -504,6 +548,13 @@ public class NPCInteraction : MonoBehaviour
 
     void StartDialogue()
     {
+        if (narrationImage != null)
+        {
+            narrationImage.enabled = false; // ✅ 나레이션 시작 시 이미지 표시
+        }
+
+
+        
         if (dialogueLines == null || dialogueLines.Length == 0)
         {
             if (nextStoryId > 0)
@@ -617,8 +668,8 @@ public class NPCInteraction : MonoBehaviour
                 if (dialogueUI != null && dialogueText != null)
                 {
                     //dialogueUI.SetActive(true);
-                    DialogueUI.Instance?.ShowTemporaryMessage("집 안에서 양동이, 버터, 후추를 찾아보자!", 2f);
-                    //dialogueText.text = "재료를 찾아오자! (버터, 후추, 양동이)";
+                    //DialogueUI.Instance?.ShowTemporaryMessage("", 2f);
+                    dialogueText.text = "양동이, 버터, 후추를 찾아오자(A버튼으로 수집가능)";
                     //StartCoroutine(HideDialogueAfterDelay(2f));
                 }
 

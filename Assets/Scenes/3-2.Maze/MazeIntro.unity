@@ -138,7 +138,6 @@ GameObject:
   - component: {fileID: 15920251}
   - component: {fileID: 15920253}
   - component: {fileID: 15920254}
-  - component: {fileID: 15920255}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: UIButton
@@ -210,7 +209,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 15920255}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIButtonClickSound, Assembly-CSharp
         m_MethodName: PlayClickSound
         m_Mode: 1
@@ -316,23 +315,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 15920246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bda20394d001c74eaa431a79706e670, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: MaseMain
---- !u!114 &15920255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15920246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db563c64acb4b4a8ff77e3e46287b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
+  volume: 1
 --- !u!1 &72235953
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,9 +2144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e579248a13d9e9e498f150ab754f8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenesToStopBGM:
-  - NPCInteraction 4
-  - MaseMain
+  bgmName: "MP_\uC54C\uC3ED\uB2EC\uC3ED"
+  scenesToKeepBGM:
+  - MazeRulleSence
 --- !u!82 &1256143186
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2167,7 +2156,7 @@ AudioSource:
   m_GameObject: {fileID: 1256143184}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5335566363546800906, guid: 6707bcfd407393548b740db49e76de8d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 43632688fa4f49a4ca15291665764b46, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2285,7 +2274,6 @@ GameObject:
   - component: {fileID: 1331673863}
   - component: {fileID: 1331673862}
   - component: {fileID: 1331673868}
-  - component: {fileID: 1331673869}
   m_Layer: 5
   m_Name: RulesButton
   m_TagString: UIButton
@@ -2404,7 +2392,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1331673869}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIButtonClickSound, Assembly-CSharp
         m_MethodName: PlayClickSound
         m_Mode: 1
@@ -2463,25 +2451,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1331673859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86cd44cd0907e614589d136f192bd957, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
+  sceneToLoad: MazeRulleSence
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
   volume: 1
---- !u!114 &1331673869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331673859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db563c64acb4b4a8ff77e3e46287b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
 --- !u!1 &1383861331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,7 +2489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 2074906621}
   blurBackground: {fileID: 1861058495}
-  pauseButton: 2
+  pauseButton: 8
   centerEyeAnchor: {fileID: 2041914663}
   menuDistance: 1
   heightOffset: -0.06
@@ -3598,7 +3574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
-  clickButton: 2097152
+  clickButton: 1
 --- !u!1 &2073662335
 GameObject:
   m_ObjectHideFlags: 0
