@@ -15,7 +15,7 @@ public class StoryItemManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 이동해도 유지
+            //DontDestroyOnLoad(gameObject); // 씬 이동해도 유지
         }
         else
         {

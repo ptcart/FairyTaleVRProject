@@ -40922,6 +40922,7 @@ GameObject:
   - component: {fileID: 1238926842}
   - component: {fileID: 1238926843}
   - component: {fileID: 1238926845}
+  - component: {fileID: 1238926846}
   m_Layer: 0
   m_Name: SystemManager
   m_TagString: Untagged
@@ -41006,6 +41007,34 @@ MonoBehaviour:
   fadeGroup: {fileID: 1015674371}
   fadeDuration: 2
   nextSceneName: Ending 2
+--- !u!114 &1238926846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238926839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81dd859ac94a3941843d5e881ea0a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doors:
+  - {fileID: 1678910604}
+  - {fileID: 766380365}
+  - {fileID: 799732256}
+  - {fileID: 1652100019}
+  redDuration: 5
+  reactDistance: 5
+  requiredPressCount: 2
+  baseMinDelay: 4
+  baseMaxDelay: 5
+  knockSound: {fileID: 8300000, guid: 3d0db004c899259459768138ec354ce3, type: 3}
+  successSceneName: Ending 2
+  failSceneName: DefenseFade
+  player: {fileID: 1476179520}
+  timer: {fileID: 993328382}
+  screenFader: {fileID: 1238926845}
 --- !u!1 &1239750589
 GameObject:
   m_ObjectHideFlags: 0
@@ -63779,7 +63808,6 @@ GameObject:
   - component: {fileID: 2057957731}
   - component: {fileID: 2057957730}
   - component: {fileID: 2057957732}
-  - component: {fileID: 2057957735}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -63832,34 +63860,6 @@ MonoBehaviour:
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
   clickButton: 1
---- !u!114 &2057957735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057957728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d81dd859ac94a3941843d5e881ea0a46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doors:
-  - {fileID: 1678910604}
-  - {fileID: 766380365}
-  - {fileID: 799732256}
-  - {fileID: 1652100019}
-  redDuration: 5
-  reactDistance: 5
-  requiredPressCount: 2
-  baseMinDelay: 4
-  baseMaxDelay: 5
-  knockSound: {fileID: 8300000, guid: 3d0db004c899259459768138ec354ce3, type: 3}
-  successSceneName: Ending 2
-  failSceneName: DefenseFade
-  player: {fileID: 1476179520}
-  timer: {fileID: 993328382}
-  screenFader: {fileID: 1238926845}
 --- !u!1 &2062730998
 GameObject:
   m_ObjectHideFlags: 0
