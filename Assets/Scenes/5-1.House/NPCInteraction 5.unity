@@ -1443,6 +1443,66 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8903058273634951509, guid: f1fc5bb90ac285e4486771552d63bcb8, type: 3}
   m_PrefabInstance: {fileID: 69900877}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &70672773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70672776}
+  - component: {fileID: 70672775}
+  - component: {fileID: 70672774}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &70672774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70672773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4294a64f5de184c875b60878e56cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 1156251764}
+  dialogueText: {fileID: 23776323}
+--- !u!114 &70672775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70672773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0a8ffd7f5f6395458c4e50a798ef9d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questCompleted: 0
+--- !u!4 &70672776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70672773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &72235953
 GameObject:
   m_ObjectHideFlags: 0
@@ -28357,8 +28417,6 @@ GameObject:
   - component: {fileID: 2057957731}
   - component: {fileID: 2057957730}
   - component: {fileID: 2057957732}
-  - component: {fileID: 2057957733}
-  - component: {fileID: 2057957734}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -28411,33 +28469,6 @@ MonoBehaviour:
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 708352017}
   clickButton: 1
---- !u!114 &2057957733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057957728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a8ffd7f5f6395458c4e50a798ef9d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questCompleted: 0
---- !u!114 &2057957734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057957728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4294a64f5de184c875b60878e56cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 1156251764}
-  dialogueText: {fileID: 23776323}
 --- !u!1001 &2061087056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29405,3 +29436,4 @@ SceneRoots:
   - {fileID: 1010723965}
   - {fileID: 1472601928}
   - {fileID: 224715162}
+  - {fileID: 70672776}

@@ -34627,9 +34627,10 @@ GameObject:
   - component: {fileID: 1238926841}
   - component: {fileID: 1238926840}
   - component: {fileID: 1238926842}
-  - component: {fileID: 1238926843}
   - component: {fileID: 1238926844}
   - component: {fileID: 1238926845}
+  - component: {fileID: 1238926847}
+  - component: {fileID: 1238926846}
   m_Layer: 0
   m_Name: SystemManager
   m_TagString: Untagged
@@ -34680,25 +34681,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storyNarrationText: {fileID: 0}
---- !u!114 &1238926843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238926839}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146844017dbbfb6429991fa929cfeafd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasChoice: {fileID: 0}
-  questionText: {fileID: 0}
-  buttonA: {fileID: 0}
-  buttonB: {fileID: 0}
-  buttonAText: {fileID: 0}
-  buttonBText: {fileID: 0}
-  blurBackground: {fileID: 0}
 --- !u!114 &1238926844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34730,6 +34712,34 @@ MonoBehaviour:
   fadeGroup: {fileID: 1015674371}
   fadeDuration: 2
   nextSceneName: NPCInteraction 11
+--- !u!114 &1238926846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238926839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ffd245a994c144698713c21a7b30ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageCanvas: {fileID: 1079264255}
+  messageText: {fileID: 448019239}
+--- !u!114 &1238926847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238926839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c61f22313547f7469d4e6392837bcf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breadCanvas: {fileID: 1785433974}
+  breadText: {fileID: 311716041}
 --- !u!1001 &1250988512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52437,8 +52447,6 @@ GameObject:
   - component: {fileID: 2057957731}
   - component: {fileID: 2057957730}
   - component: {fileID: 2057957732}
-  - component: {fileID: 2057957733}
-  - component: {fileID: 2057957734}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -52491,34 +52499,6 @@ MonoBehaviour:
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
   clickButton: 1
---- !u!114 &2057957733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057957728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c61f22313547f7469d4e6392837bcf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  breadCanvas: {fileID: 1785433974}
-  breadText: {fileID: 311716041}
---- !u!114 &2057957734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057957728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ffd245a994c144698713c21a7b30ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  messageCanvas: {fileID: 1079264255}
-  messageText: {fileID: 448019239}
 --- !u!1 &2062730998
 GameObject:
   m_ObjectHideFlags: 0

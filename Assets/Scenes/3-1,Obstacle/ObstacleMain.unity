@@ -34808,7 +34808,6 @@ GameObject:
   - component: {fileID: 2057957731}
   - component: {fileID: 2057957730}
   - component: {fileID: 2057957732}
-  - component: {fileID: 2057957733}
   - component: {fileID: 2057957734}
   m_Layer: 0
   m_Name: EventSystem
@@ -34862,20 +34861,6 @@ MonoBehaviour:
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 181386606}
   clickButton: 1
---- !u!114 &2057957733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057957728}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c61f22313547f7469d4e6392837bcf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  breadCanvas: {fileID: 0}
-  breadText: {fileID: 0}
 --- !u!114 &2057957734
 MonoBehaviour:
   m_ObjectHideFlags: 0

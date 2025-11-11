@@ -56,6 +56,18 @@ public class NPCSpawner : MonoBehaviour
             currentStoryId = fixedStoryId;
             Debug.Log("✅ GameDataManager에 값이 없어 fixedStoryId로 설정: " + currentStoryId);
         }
+        
+        // ✅ 현재 씬 이름을 확인해서 5번 씬인지 체크
+        string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        // ✅ 만약 현재 씬이 5번이고, 스토리 ID가 301~302(수집 구간)이라면 강제로 300으로 초기화
+        if (currentSceneName == "NPCInteraction 5" && currentStoryId >= 301 && currentStoryId <= 302)
+        {
+            Debug.Log("⚠️ [NPCSpawner] Scene5 수집 구간(301~302) 감지 → storyId를 300으로 되돌립니다.");
+            currentStoryId = 17;
+            GameDataManager.nextStoryIdToLoad = 17; // 다른 시스템과 동기화
+        }
+
 
         RemoveAllNPCs();
         StartCoroutine(LoadNPCsFromDB(currentStoryId));
