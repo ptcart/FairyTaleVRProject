@@ -18,6 +18,10 @@ public class FairyTaleUIManager : MonoBehaviour
         public string preview_image_path;
         
     }
+    
+    [Header("💬 준비 중 메시지 텍스트 오브젝트 (인스펙터에서 연결)")]
+    public GameObject notReadyTextObject;
+
 
     public Button nextButton; 
     public Button continueButton;// 👈 인스펙터에서 연결
@@ -43,6 +47,9 @@ public class FairyTaleUIManager : MonoBehaviour
             nextButton.gameObject.SetActive(false);
         if (continueButton != null)
             continueButton.gameObject.SetActive(false);
+        // 💬 준비 중 텍스트도 숨김
+        if (notReadyTextObject != null)
+            notReadyTextObject.SetActive(false);
 
         // ⭐ DetailPanel 초기화
         if (detailPanelObjects != null)
@@ -166,6 +173,10 @@ public class FairyTaleUIManager : MonoBehaviour
 
             var titleText = titleObj.GetComponent<TextMeshProUGUI>();
             var summaryText = summaryObj.GetComponent<TextMeshProUGUI>();
+            
+            
+            // 🧭 디버그 로그 추가 (DB 데이터 확인용)
+            Debug.Log($"📖 [DB 데이터 확인] 제목: {tale.title}, 요약: {tale.summary}");
 
             if (titleText == null || summaryText == null)
             {
@@ -261,36 +272,58 @@ public class FairyTaleUIManager : MonoBehaviour
         if (nextButton != null) nextButton.gameObject.SetActive(false);
         if (continueButton != null) continueButton.gameObject.SetActive(false);
 
-        // ✅ 저장 여부 확인 후 표시
-        if (SaveManager.HasSaveData())
-        {
-            // 저장 기록 있음 → 입장 + 계속하기
-            if (nextButton != null)
-            {
-                nextButton.gameObject.SetActive(true);
-                nextButton.interactable = true; // 🔥 흐려짐 방지
-            }
-            if (continueButton != null)
-                continueButton.gameObject.SetActive(true);
+        // ✅ 선택한 카드가 첫 번째인지 확인
+        bool isFirstCard = (tales.Count > 0 && cardUI.fairyTaleData == tales[0]);
 
-            Debug.Log("💾 저장 기록 있음 → ‘입장’ + ‘계속하기’ 표시");
+        if (isFirstCard)
+        {
+            if (notReadyTextObject != null)
+                notReadyTextObject.SetActive(false); // ✅ 첫 번째 카드일 땐 숨김
+            
+            // ✅ 첫 번째 카드 → 기존 로직 유지
+            if (SaveManager.HasSaveData())
+            {
+                // 저장 기록 있음 → 입장 + 계속하기
+                if (nextButton != null)
+                {
+                    nextButton.gameObject.SetActive(true);
+                    nextButton.interactable = true;
+                }
+                if (continueButton != null)
+                    continueButton.gameObject.SetActive(true);
+
+                Debug.Log("💾 저장 기록 있음 → ‘입장’ + ‘계속하기’ 표시");
+            }
+            else
+            {
+                // 저장 기록 없음 → 입장만
+                if (nextButton != null)
+                {
+                    nextButton.gameObject.SetActive(true);
+                    nextButton.interactable = true;
+                }
+                if (continueButton != null)
+                    continueButton.gameObject.SetActive(false);
+
+                Debug.Log("📄 저장 기록 없음 → ‘입장’만 표시");
+            }
         }
         else
         {
-            // 저장 기록 없음 → 입장만
-            if (nextButton != null)
+            // 🚫 첫 번째 카드가 아닐 경우 → 버튼 숨김 + 안내 문구 표시
+            if (nextButton != null) nextButton.gameObject.SetActive(false);
+            if (continueButton != null) continueButton.gameObject.SetActive(false);
+
+            // 💬 준비 중 텍스트 오브젝트 활성화
+            if (notReadyTextObject != null)
             {
-                nextButton.gameObject.SetActive(true);
-                nextButton.interactable = true; // 🔥 클릭 가능하도록
+                notReadyTextObject.SetActive(true);
             }
-            if (continueButton != null)
-                continueButton.gameObject.SetActive(false);
-
-            Debug.Log("📄 저장 기록 없음 → ‘입장’만 표시");
         }
-
-
+        // ✅ 카드 선택됨 로그
         Debug.Log("✅ 카드 선택됨: " + cardUI.fairyTaleData.title);
+
+        // ✅ 선택된 동화의 제목과 요약을 UI에 표시
         ShowDetails(cardUI.fairyTaleData);
     }
 

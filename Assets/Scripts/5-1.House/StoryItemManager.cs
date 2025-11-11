@@ -39,7 +39,7 @@ public class StoryItemManager : MonoBehaviour
         {
             questCompleted = true;
             Debug.Log("🟢 모든 재료를 모았습니다! NPC에게 돌아가세요.");
-            DialogueUI.Instance?.ShowTemporaryMessage("모든 재료를 모았다!\nNPC에게 돌아가자", 2f);
+            DialogueUI.Instance?.ShowTemporaryMessage("할머니에게 가자", 2f);
         }
     }
 

@@ -1268,8 +1268,7 @@ GameObject:
   - component: {fileID: 345859177}
   - component: {fileID: 345859176}
   - component: {fileID: 345859175}
-  - component: {fileID: 345859174}
-  - component: {fileID: 345859173}
+  - component: {fileID: 345859182}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: UIButton
@@ -1277,32 +1276,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &345859173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345859172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bda20394d001c74eaa431a79706e670, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: MaseMain
---- !u!114 &345859174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345859172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db563c64acb4b4a8ff77e3e46287b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
 --- !u!114 &345859175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,6 +1437,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0.6700001, y: -2.0889282}
   m_SizeDelta: {x: 2, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &345859182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345859172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: MaseMain
+  sceneLoadDelay: 0.3
+  clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
+  volume: 1
 --- !u!1 &367070874
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 400222432}
   blurBackground: {fileID: 1972818443}
-  pauseButton: 2
+  pauseButton: 8
   centerEyeAnchor: {fileID: 2041914663}
   menuDistance: 1
   heightOffset: -0.06
@@ -9497,7 +9486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
-  clickButton: 2097152
+  clickButton: 1
 --- !u!1 &2063952016
 GameObject:
   m_ObjectHideFlags: 0

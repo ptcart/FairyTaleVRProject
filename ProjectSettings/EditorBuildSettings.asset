@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/! Main/BootScene.unity
     guid: 78532219075b01a4d9de86c629e9d0b4
   - enabled: 1
@@ -83,7 +83,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3-2.Maze/MazeRulleSence.unity
     guid: 2709a3983e9f53342b5e05a3fe8e8b36
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/5-2.WolfDefense/DefenseEnding.unity
     guid: 8b0fea44ed9b65544ae1cc6ee6d18de3
   - enabled: 1
@@ -92,6 +92,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/5-2.WolfDefense/DefenseMain.unity
     guid: bd037f1de4ee7ec43b503d705b4eea8a
+  - enabled: 1
+    path: Assets/Scenes/5-2.WolfDefense/DefenseFade.unity
+    guid: 119f754ac67303643b6454bb043031cc
   - enabled: 1
     path: Assets/Scenes/5-2.WolfDefense/DefenseRule.unity
     guid: 90f8e1e47983a4f419cb6392e6d135d7

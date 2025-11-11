@@ -321,7 +321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.8497467}
+  m_AnchoredPosition: {x: 0, y: 1.8499407}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &100440372
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1295848569}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9996187
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2843,7 +2843,6 @@ GameObject:
   - component: {fileID: 976205091}
   - component: {fileID: 976205090}
   - component: {fileID: 976205093}
-  - component: {fileID: 976205089}
   - component: {fileID: 976205088}
   - component: {fileID: 976205087}
   - component: {fileID: 976205086}
@@ -2921,19 +2920,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.5, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &976205089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976205083}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea95f9b7260119f4d96922558b52b91b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
 --- !u!114 &976205090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2978,7 +2964,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976205093}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UniversalButtonAction, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
@@ -3037,15 +3023,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 976205083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdf91ecd669de924d842bef49a1cf03b, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: MainVRScene
-  delay: 0.3
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
   volume: 1
-  enableVRInput: 1
-  requireHoverOrSelect: 1
 --- !u!1 &989016465
 GameObject:
   m_ObjectHideFlags: 0
@@ -4152,6 +4136,9 @@ MonoBehaviour:
   fadeGroup: {fileID: 1468660193}
   fadeDuration: 1.5
   autoFadeInOnStart: 1
+  autoRebindFadeGroup: 1
+  fadeGroupTag: 
+  fadeGroupName: ScreenFadeOverlay
 --- !u!4 &1666788032
 Transform:
   m_ObjectHideFlags: 0
@@ -4754,6 +4741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
+  clickButton: 2097152
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -134,11 +134,10 @@ GameObject:
   - component: {fileID: 15920250}
   - component: {fileID: 15920249}
   - component: {fileID: 15920248}
-  - component: {fileID: 15920255}
   - component: {fileID: 15920252}
   - component: {fileID: 15920251}
   - component: {fileID: 15920253}
-  - component: {fileID: 15920254}
+  - component: {fileID: 15920256}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: UIButton
@@ -307,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 21300000, guid: 205d7e4f03b5cda48817e9df4057cfcf, type: 3}
   highlightSprite: {fileID: 21300000, guid: 89ab20275c2e9864e8e673936c9c4021, type: 3}
---- !u!114 &15920254
+--- !u!114 &15920256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -316,25 +315,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 15920246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb3fb194da5999e4d9bc971ad3332bd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
+  sceneToLoad: FairyTaleSelectionScene
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
   volume: 1
---- !u!114 &15920255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15920246}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea95f9b7260119f4d96922558b52b91b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
 --- !u!1 &72235953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,8 +1684,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e579248a13d9e9e498f150ab754f8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenesToStopBGM:
-  - NPCInteraction 1
+  bgmName: "[\uBB34\uB8CCBGM]  \uD53C\uC544\uB178 \uBC30\uACBD\uC74C\uC545 \U0001F3B9
+    \uB2EC\uCF64\uD55C \uD734\uC2DD \uC2DC\uAC04"
+  scenesToKeepBGM:
+  - Endings
+  - FairyTaleSelectionScene
+  - Setting
 --- !u!1 &935445436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2090,10 +2081,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1331673859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d81f739012bdbb439213c0ca5c4f069, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
+  sceneToLoad: Endings
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
   volume: 1
 --- !u!1 &1334546077
@@ -2289,10 +2281,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1334546077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded78b4b699f4764aa6b4737b78fe3c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 185898f2092813d4a9e33c4d424c0c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
+  sceneToLoad: Setting
+  sceneLoadDelay: 0.3
   clickSound: {fileID: 8300000, guid: 3508fe83acbebaa4ba9fec8ce583b5a1, type: 3}
   volume: 1
 --- !u!1 &1350044279
@@ -3352,7 +3345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   rayTransform: {fileID: 903965363}
-  clickButton: 2097152
+  clickButton: 1
 --- !u!1 &2073662335
 GameObject:
   m_ObjectHideFlags: 0
@@ -3384,6 +3377,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2105735632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105735634}
+  - component: {fileID: 2105735633}
+  m_Layer: 0
+  m_Name: EventSystemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2105735633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105735632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b1dbd88e7ba37b4f86a4d96ab40f831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2105735634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105735632}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3405,3 +3442,4 @@ SceneRoots:
   - {fileID: 925249255}
   - {fileID: 1711795773}
   - {fileID: 1712182167}
+  - {fileID: 2105735634}

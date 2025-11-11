@@ -38,7 +38,7 @@ public class VRUIButtonClicker : MonoBehaviour
                 if (img != null)
                 {
                     originalColor = img.color;
-                    img.color = Color.yellow; // ⭐ Hover 시 색상 변경
+                    img.color = new Color(0.9f, 0.9f, 0.85f);
                 }
             }
 
@@ -100,7 +100,8 @@ public class VRUIButtonClicker : MonoBehaviour
                 {
                     string previousScene = "MainVRScene"; // 🧭 기본적으로 메인 메뉴 씬 이름
                     Debug.Log($"↩️ [VRUIButtonClicker] 뒤로가기 → '{previousScene}' 로 전환");
-                    GlobalScreenFader.Instance.FadeAndLoadScene(previousScene);
+                    SceneManager.LoadScene(previousScene);
+                    //GlobalScreenFader.Instance.FadeAndLoadScene(previousScene);
                 }
             }
         }

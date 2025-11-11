@@ -15,6 +15,28 @@ public class CustomOVRInputModule : PointerInputModule
 
     public override void Process()
     {
+        // ✅ RightRay 자동 재바인딩 (씬 전환 후 Missing 방지)
+        if (rayTransform == null)
+        {
+            var found = GameObject.Find("RightRay");
+            if (found != null)
+            {
+                rayTransform = found.transform;
+                Debug.Log($"🔄 [CustomOVRInputModule] RightRay 재연결 완료: {found.name}");
+            }
+            else
+            {
+                // 아직 생성 안 된 경우 다음 프레임에서 다시 시도
+                Debug.LogWarning("⚠️ [CustomOVRInputModule] RightRay를 찾지 못했습니다. (씬 생성 지연 가능성)");
+                return;
+            }
+        }
+
+        if (pointerData == null)
+            pointerData = new OVRPointerEventData(eventSystem);
+        else
+            pointerData.Reset();
+        
         if (rayTransform == null) return;
 
         if (pointerData == null)
@@ -48,17 +70,16 @@ public class CustomOVRInputModule : PointerInputModule
         bool pressed = OVRInput.GetDown(clickButton);
         bool held = OVRInput.Get(clickButton);
         bool released = OVRInput.GetUp(clickButton);
-        bool onePressed = OVRInput.GetDown(OVRInput.Button.One); // ✅ A버튼 감지
+        bool onePressed = OVRInput.GetDown(OVRInput.Button.One);
+        bool oneHeld = OVRInput.Get(OVRInput.Button.One);
+        bool oneReleased = OVRInput.GetUp(OVRInput.Button.One);
 
-
-        // 🔹 클릭 시
+        // 🔹 기존 트리거 (그대로 유지)
         if (pressed)
             ProcessPress(pointerData);
 
-        // 🔹 버튼 누르고 있는 동안 드래그 유지 (슬라이더 대응)
         if (held && pointerData.pointerDrag != null)
         {
-            // 🎯 슬라이더 전용 처리
             if (pointerData.pointerDrag.GetComponent<UnityEngine.UI.Slider>() != null)
             {
                 if (!pointerData.dragging)
@@ -66,18 +87,54 @@ public class CustomOVRInputModule : PointerInputModule
                     ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.beginDragHandler);
                     pointerData.dragging = true;
                 }
-
                 ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.dragHandler);
             }
         }
 
-
-        // 🔹 버튼 뗐을 때 처리
         if (released)
             ProcessRelease(pointerData);
-        // ✅ A버튼으로 드롭다운 항목 선택 처리
+
+
+        // ✅ A버튼 (버튼/토글은 즉시 확정, 슬라이더는 드래그 유지)
         if (onePressed)
-            HandleDropdownItemSelect(pointerData);
+        {
+            var target = pointerData.pointerCurrentRaycast.gameObject;
+
+            // 만약 Toggle 또는 Button이면 즉시 클릭 확정
+            if (target != null && 
+                (target.GetComponent<UnityEngine.UI.Toggle>() != null ||
+                 target.GetComponent<UnityEngine.UI.Button>() != null))
+            {
+                ProcessPress(pointerData);
+                ProcessRelease(pointerData);  // 즉시 클릭 확정 ✅
+            }
+            else
+            {
+                // 슬라이더 등은 기존 방식 유지
+                ProcessPress(pointerData);
+            }
+        }
+
+        // A버튼 누르고 있는 동안 드래그 유지 (슬라이더 전용)
+        if (oneHeld && pointerData.pointerDrag != null)
+        {
+            if (pointerData.pointerDrag.GetComponent<UnityEngine.UI.Slider>() != null)
+            {
+                if (!pointerData.dragging)
+                {
+                    ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.beginDragHandler);
+                    pointerData.dragging = true;
+                }
+                ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.dragHandler);
+            }
+        }
+
+        // A버튼 뗄 때 (단, 버튼/토글은 이미 클릭됐으므로 Release 생략)
+        if (oneReleased && pointerData.pointerDrag != null)
+        {
+            ProcessRelease(pointerData);
+        }
+
 
     }
     
